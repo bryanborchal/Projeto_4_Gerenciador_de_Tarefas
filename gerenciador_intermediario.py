@@ -1,7 +1,7 @@
-lista_de_tarefas = { 
-        'Tarefas' : ['Limpar fogão', 'Lavar a louça'],
-        'Data das tarefas' : ['2/7', '2/7']
-    }
+import json
+with open("dados.json", "r", encoding="utf-8") as arquivo:
+        lista_de_tarefas = json.load(arquivo)
+
 
 
 def mostrar_menu():
@@ -49,6 +49,8 @@ def adicionar_tarefa():
     lista_de_tarefas['Tarefas'].append(nome_da_tarefa)
     lista_de_tarefas['Data das tarefas'].append(dia_da_tarefa)
     print('| Tarefa adicionada')
+    with open("dados.json", "w", encoding="utf-8") as arquivo:
+        json.dump(lista_de_tarefas, arquivo, indent=4, ensure_ascii=False)
 
 def remover_tarefa():
     mostrar_tarefas()
@@ -58,11 +60,12 @@ def remover_tarefa():
             tarefa_removida = lista_de_tarefas['Tarefas'].pop(numero_tarefa)
             lista_de_tarefas['Data das tarefas'].pop(numero_tarefa)
             print(f'Tarefa "{tarefa_removida}" removida!')
+            with open("dados.json", "w", encoding="utf-8") as arquivo:
+                json.dump(lista_de_tarefas, arquivo, indent=4, ensure_ascii=False)
         else:
             print('| Número de tarefa inválido!')
     except ValueError:
         print('| Digite um número válido!')
+        
 
 mostrar_menu()
-
-
